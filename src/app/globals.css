@@ -90,298 +90,308 @@
   to { transform: translate3d(-50%, 0, 0); }
 }
 
-html {
-  overflow-x: clip;
-  scroll-behavior: smooth;
-  /* Sticky header offset for in-page anchors. */
-  scroll-padding-top: 7.5rem;
-  background-color: var(--color-bg);
-  color-scheme: dark;
-}
+@layer base {
+  html {
+    overflow-x: clip;
+    scroll-behavior: smooth;
+    /* Sticky header offset for in-page anchors. */
+    scroll-padding-top: 7.5rem;
+    background-color: var(--color-bg);
+    color-scheme: dark;
+  }
 
-/*
- * No background on <body> on purpose. The canvas colour comes from <html>.
- * A background here would paint above every negative-z-index element (the
- * shader fields and ambient glows), because in the root stacking context a
- * block's background paints after negative-z descendants.
- */
-body {
-  color: var(--color-ink);
-  -webkit-font-smoothing: antialiased;
-}
+  /*
+   * No background on <body> on purpose. The canvas colour comes from <html>.
+   * A background here would paint above every negative-z-index element (the
+   * shader fields and ambient glows), because in the root stacking context a
+   * block's background paints after negative-z descendants.
+   */
+  body {
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+  }
 
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
-/* ---------------------------------------------------------------------------
- * 1. Frosted glass surface
- * Translucent fill + hairline border + top-light sheen + depth shadow.
- * ------------------------------------------------------------------------ */
-.glass {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.055);
-  border: 1px solid var(--color-hair);
-  box-shadow: var(--shadow-depth);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-}
+/*
+ * Component classes live in `components` so Tailwind utilities (which sit in
+ * the later `utilities` layer) can override them. Unlayered, `.glass`'s
+ * `position: relative` silently beat an `absolute` utility on the same
+ * element and dropped the node back into normal flow.
+ */
+@layer components {
+  /* ---------------------------------------------------------------------------
+   * 1. Frosted glass surface
+   * Translucent fill + hairline border + top-light sheen + depth shadow.
+   * ------------------------------------------------------------------------ */
+  .glass {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.055);
+    border: 1px solid var(--color-hair);
+    box-shadow: var(--shadow-depth);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
 
-.glass-muted {
-  background-color: rgba(255, 255, 255, 0.035);
-  box-shadow: var(--shadow-soft);
-}
+  .glass-muted {
+    background-color: rgba(255, 255, 255, 0.035);
+    box-shadow: var(--shadow-soft);
+  }
 
-/* Brighter panel for hero-level surfaces and floating cards. */
-.glass-strong {
-  background-color: rgba(255, 255, 255, 0.085);
-  border-color: rgba(255, 255, 255, 0.16);
-  box-shadow: var(--shadow-lift);
-}
+  /* Brighter panel for hero-level surfaces and floating cards. */
+  .glass-strong {
+    background-color: rgba(255, 255, 255, 0.085);
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow: var(--shadow-lift);
+  }
 
-/* ---------------------------------------------------------------------------
- * 3. Top-light bevel / sheen — light catching the top edge.
- * ------------------------------------------------------------------------ */
-.sheen::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 50%;
-  pointer-events: none;
-  z-index: -1;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.16) 0%,
-    rgba(255, 255, 255, 0.04) 55%,
-    rgba(255, 255, 255, 0.015) 100%
-  );
-}
+  /* ---------------------------------------------------------------------------
+   * 3. Top-light bevel / sheen — light catching the top edge.
+   * ------------------------------------------------------------------------ */
+  .sheen::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 50%;
+    pointer-events: none;
+    z-index: -1;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.16) 0%,
+      rgba(255, 255, 255, 0.04) 55%,
+      rgba(255, 255, 255, 0.015) 100%
+    );
+  }
 
-/* ---------------------------------------------------------------------------
- * 2. Glossy gradient button — light top → deep bottom, inner top highlight.
- * ------------------------------------------------------------------------ */
-.btn-gloss {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  background: linear-gradient(180deg, #5aa0ff 0%, #2f80ff 52%, #1e63e0 100%);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  box-shadow: var(--shadow-glow);
-  color: #fff;
-  transition: transform 150ms ease, box-shadow 150ms ease, filter 150ms ease;
-}
+  /* ---------------------------------------------------------------------------
+   * 2. Glossy gradient button — light top → deep bottom, inner top highlight.
+   * ------------------------------------------------------------------------ */
+  .btn-gloss {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: linear-gradient(180deg, #5aa0ff 0%, #2f80ff 52%, #1e63e0 100%);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow: var(--shadow-glow);
+    color: #fff;
+    transition: transform 150ms ease, box-shadow 150ms ease, filter 150ms ease;
+  }
 
-.btn-gloss::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 50%;
-  pointer-events: none;
-  z-index: -1;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0));
-}
+  .btn-gloss::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 50%;
+    pointer-events: none;
+    z-index: -1;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0));
+  }
 
-.btn-gloss:hover {
-  transform: translateY(-1px);
-  filter: brightness(1.06);
-  box-shadow: 0 14px 34px rgba(47, 128, 255, 0.55);
-}
+  .btn-gloss:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.06);
+    box-shadow: 0 14px 34px rgba(47, 128, 255, 0.55);
+  }
 
-.btn-gloss:active { transform: translateY(0); }
+  .btn-gloss:active { transform: translateY(0); }
 
-.btn-ghost {
-  background-color: rgba(255, 255, 255, 0.055);
-  border: 1px solid var(--color-hair);
-  box-shadow: var(--shadow-soft);
-  transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease;
-}
+  .btn-ghost {
+    background-color: rgba(255, 255, 255, 0.055);
+    border: 1px solid var(--color-hair);
+    box-shadow: var(--shadow-soft);
+    transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease;
+  }
 
-.btn-ghost:hover {
-  background-color: rgba(255, 255, 255, 0.09);
-  border-color: var(--color-hair-strong);
-  transform: translateY(-1px);
-}
+  .btn-ghost:hover {
+    background-color: rgba(255, 255, 255, 0.09);
+    border-color: var(--color-hair-strong);
+    transform: translateY(-1px);
+  }
 
-/* A feature card filled with brand colour — the accent tile in a bento grid. */
-.card-filled {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  background: linear-gradient(165deg, #4c9bff 0%, #2f6bf5 48%, #1e52d8 100%);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 24px 50px rgba(30, 82, 216, 0.35);
-}
+  /* A feature card filled with brand colour — the accent tile in a bento grid. */
+  .card-filled {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: linear-gradient(165deg, #4c9bff 0%, #2f6bf5 48%, #1e52d8 100%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 24px 50px rgba(30, 82, 216, 0.35);
+  }
 
-.card-filled::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 45%;
-  pointer-events: none;
-  z-index: -1;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0));
-}
+  .card-filled::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 45%;
+    pointer-events: none;
+    z-index: -1;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0));
+  }
 
-/* Cards that respond to the pointer. */
-.card-lift {
-  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
-}
+  /* Cards that respond to the pointer. */
+  .card-lift {
+    transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+  }
 
-.card-lift:hover {
-  transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.18);
-  box-shadow: var(--shadow-lift);
-}
+  .card-lift:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: var(--shadow-lift);
+  }
 
-/* Focus ring that reads on the navy base. */
-:where(a, button, summary, input):focus-visible {
-  outline: 2px solid var(--color-brand-light);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
+  /* Focus ring that reads on the navy base. */
+  :where(a, button, summary, input):focus-visible {
+    outline: 2px solid var(--color-brand-light);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
 
-/* Section eyebrow pill. */
-.pill {
-  background-color: rgba(47, 128, 255, 0.16);
-  border: 1px solid rgba(90, 160, 255, 0.35);
-  color: var(--color-brand-light);
-}
+  /* Section eyebrow pill. */
+  .pill {
+    background-color: rgba(47, 128, 255, 0.16);
+    border: 1px solid rgba(90, 160, 255, 0.35);
+    color: var(--color-brand-light);
+  }
 
-/* Edge-faded marquee track. */
-.marquee-mask {
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-}
+  /* Edge-faded marquee track. */
+  .marquee-mask {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
 
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: var(--animate-marquee);
-}
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: var(--animate-marquee);
+  }
 
-.marquee-mask:hover .marquee-track {
-  animation-play-state: paused;
-}
+  .marquee-mask:hover .marquee-track {
+    animation-play-state: paused;
+  }
 
-/* Hairline rule that fades at both ends. */
-.rule-fade {
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.12) 20%,
-    rgba(255, 255, 255, 0.12) 80%,
-    transparent
-  );
-}
+  /* Hairline rule that fades at both ends. */
+  .rule-fade {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.12) 20%,
+      rgba(255, 255, 255, 0.12) 80%,
+      transparent
+    );
+  }
 
 
-/* ---------------------------------------------------------------------------
- * Section shader fields
- *
- * Animated mesh-gradient backdrops. Each section gets one so consecutive bands
- * never sit on flat navy. Everything animates on `transform`/`opacity` only, so
- * these stay on the compositor; the global reduced-motion rule freezes them.
- * ------------------------------------------------------------------------ */
-.shader-field {
-  position: absolute;
-  inset: 0;
-  z-index: -10;
-  overflow: hidden;
-  pointer-events: none;
-}
+  /* ---------------------------------------------------------------------------
+   * Section shader fields
+   *
+   * Animated mesh-gradient backdrops. Each section gets one so consecutive bands
+   * never sit on flat navy. Everything animates on `transform`/`opacity` only, so
+   * these stay on the compositor; the global reduced-motion rule freezes them.
+   * ------------------------------------------------------------------------ */
+  .shader-field {
+    position: absolute;
+    inset: 0;
+    z-index: -10;
+    overflow: hidden;
+    pointer-events: none;
+  }
 
-.shader-blob {
-  position: absolute;
-  border-radius: 9999px;
-  will-change: transform;
-}
+  .shader-blob {
+    position: absolute;
+    border-radius: 9999px;
+    will-change: transform;
+  }
 
-/* Fine film grain, layered over the colour so gradients don't band. */
-.shader-grain {
-  position: absolute;
-  inset: 0;
-  opacity: 0.15;
-  mix-blend-mode: soft-light;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-}
+  /* Fine film grain, layered over the colour so gradients don't band. */
+  .shader-grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.15;
+    mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
 
-/* Slowly rotating conic sweep — the "light source" in a beam field. */
-.shader-sweep {
-  position: absolute;
-  border-radius: 9999px;
-  will-change: transform;
-  animation: var(--animate-sweep);
-  background: conic-gradient(
-    from 0deg,
-    rgba(47, 128, 255, 0) 0deg,
-    rgba(47, 128, 255, 0.16) 60deg,
-    rgba(61, 214, 176, 0.1) 140deg,
-    rgba(47, 128, 255, 0) 240deg,
-    rgba(139, 92, 246, 0.14) 320deg,
-    rgba(47, 128, 255, 0) 360deg
-  );
-}
+  /* Slowly rotating conic sweep — the "light source" in a beam field. */
+  .shader-sweep {
+    position: absolute;
+    border-radius: 9999px;
+    will-change: transform;
+    animation: var(--animate-sweep);
+    background: conic-gradient(
+      from 0deg,
+      rgba(47, 128, 255, 0) 0deg,
+      rgba(47, 128, 255, 0.16) 60deg,
+      rgba(61, 214, 176, 0.1) 140deg,
+      rgba(47, 128, 255, 0) 240deg,
+      rgba(139, 92, 246, 0.14) 320deg,
+      rgba(47, 128, 255, 0) 360deg
+    );
+  }
 
-/* Perspective floor grid, fading toward the horizon. */
-.shader-grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
-  background-size: 64px 64px;
-  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 0%, transparent 78%);
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 0%, transparent 78%);
-}
+  /* Perspective floor grid, fading toward the horizon. */
+  .shader-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 0%, transparent 78%);
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 0%, transparent 78%);
+  }
 
-/* ---------------------------------------------------------------------------
- * Floating 3D capsule navbar
- * ------------------------------------------------------------------------ */
-.nav-capsule {
-  position: relative;
-  isolation: isolate;
-  border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: linear-gradient(
-    180deg,
-    rgba(28, 40, 76, 0.82) 0%,
-    rgba(12, 18, 38, 0.86) 55%,
-    rgba(8, 12, 28, 0.9) 100%
-  );
-  backdrop-filter: blur(22px) saturate(140%);
-  -webkit-backdrop-filter: blur(22px) saturate(140%);
-  box-shadow:
-    /* lift off the page */
-    0 22px 48px rgba(0, 0, 0, 0.55),
-    0 4px 12px rgba(0, 0, 0, 0.35),
-    /* blue bounce light underneath */
-    0 10px 40px rgba(47, 128, 255, 0.16),
-    /* bevel: bright top edge, dark bottom edge */
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.45);
-}
+  /* ---------------------------------------------------------------------------
+   * Floating 3D capsule navbar
+   * ------------------------------------------------------------------------ */
+  .nav-capsule {
+    position: relative;
+    isolation: isolate;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: linear-gradient(
+      180deg,
+      rgba(28, 40, 76, 0.82) 0%,
+      rgba(12, 18, 38, 0.86) 55%,
+      rgba(8, 12, 28, 0.9) 100%
+    );
+    backdrop-filter: blur(22px) saturate(140%);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+    box-shadow:
+      /* lift off the page */
+      0 22px 48px rgba(0, 0, 0, 0.55),
+      0 4px 12px rgba(0, 0, 0, 0.35),
+      /* blue bounce light underneath */
+      0 10px 40px rgba(47, 128, 255, 0.16),
+      /* bevel: bright top edge, dark bottom edge */
+      inset 0 1px 0 rgba(255, 255, 255, 0.22),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.45);
+  }
 
-/* Glossy highlight across the capsule's upper half. */
-.nav-capsule::before {
-  content: "";
-  position: absolute;
-  inset: 1px 1px auto 1px;
-  height: 48%;
-  z-index: -1;
-  pointer-events: none;
-  border-radius: 9999px 9999px 40% 40% / 9999px 9999px 60% 60%;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.16) 0%,
-    rgba(255, 255, 255, 0.04) 60%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  /* Glossy highlight across the capsule's upper half. */
+  .nav-capsule::before {
+    content: "";
+    position: absolute;
+    inset: 1px 1px auto 1px;
+    height: 48%;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: 9999px 9999px 40% 40% / 9999px 9999px 60% 60%;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.16) 0%,
+      rgba(255, 255, 255, 0.04) 60%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
 }

@@ -176,6 +176,52 @@ export const PlayGlyph = (p: IconProps) => (
   </svg>
 );
 
+export const UsersIcon = (p: IconProps) => (
+  <Base {...p}>
+    <circle cx="9" cy="8.5" r="3.4" />
+    <path d="M3 20c0-3.2 2.7-5.2 6-5.2s6 2 6 5.2" />
+    <path d="M16 5.6a3.4 3.4 0 0 1 0 6.3M17.5 19.4c0-2.2-.8-3.8-2-4.8" />
+  </Base>
+);
+
+export const GlobeIcon = (p: IconProps) => (
+  <Base {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M3.2 9.8h17.6M3.2 14.2h17.6" />
+    <path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18Z" />
+  </Base>
+);
+
+export const ShareIcon = (p: IconProps) => (
+  <Base {...p}>
+    <circle cx="17.5" cy="6" r="2.8" />
+    <circle cx="6.5" cy="12" r="2.8" />
+    <circle cx="17.5" cy="18" r="2.8" />
+    <path d="m9 10.7 6-3.2M9 13.3l6 3.2" />
+  </Base>
+);
+
+export const BellIcon = (p: IconProps) => (
+  <Base {...p}>
+    <path d="M18 9a6 6 0 1 0-12 0c0 5-2 6-2 6h16s-2-1-2-6Z" />
+    <path d="M13.7 19a2 2 0 0 1-3.4 0" />
+  </Base>
+);
+
+export const TargetIcon = (p: IconProps) => (
+  <Base {...p}>
+    <circle cx="12" cy="12" r="8.5" />
+    <circle cx="12" cy="12" r="4.6" />
+    <circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none" />
+  </Base>
+);
+
+export const HeartIcon = (p: IconProps) => (
+  <Base {...p}>
+    <path d="M12 20.3 4.8 13.4a4.6 4.6 0 0 1 6.5-6.5l.7.7.7-.7a4.6 4.6 0 0 1 6.5 6.5Z" />
+  </Base>
+);
+
 /** Logo glyph — a beveled vault door. */
 export const Logo = (p: IconProps) => (
   <svg viewBox="0 0 32 32" fill="none" aria-hidden="true" {...p}>

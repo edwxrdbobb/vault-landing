@@ -1,5 +1,6 @@
 import { StatusBar } from "./phone-frame";
 import {
+  BellIcon,
   GearIcon,
   ListIcon,
   LockIcon,
@@ -295,6 +296,79 @@ export function HistoryScreen() {
               >
                 {amount}
               </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
+
+/** FundMe campaign detail — progress, shared dial code, contributor wall. */
+export function CampaignScreen() {
+  const contributors = [
+    ["Fatmata K.", "SLE 500.00", "Praying for her 🙏"],
+    ["Anonymous", "SLE 1,000.00", ""],
+    ["Mohamed S.", "SLE 250.00", "Go well!"],
+    ["Isatu B.", "SLE 150.00", "Every little helps"],
+  ] as const;
+
+  return (
+    <>
+      <StatusBar />
+
+      {/* Milestone push notification, as it lands on the lock/home screen. */}
+      <div className="relative mx-3 mt-3 rounded-2xl border border-white/20 bg-white/[0.13] px-3 py-2.5 backdrop-blur-md">
+        <div className="flex items-center gap-2.5">
+          <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-[linear-gradient(180deg,#5AA0FF,#1E63E0)]">
+            <BellIcon className="h-3.5 w-3.5" />
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-[10.5px] font-bold">Amara&apos;s school fees is 50% funded</p>
+            <p className="text-[9px] text-ink-2">Keep sharing — SLE 3,600 to go</p>
+          </div>
+          <span className="shrink-0 text-[8.5px] text-ink-3">now</span>
+        </div>
+      </div>
+
+      <div className="relative px-4 pb-4 pt-4">
+        <div className="mb-3 flex items-center justify-between gap-2">
+          <p className="truncate text-[15px] font-extrabold">Amara&apos;s school fees</p>
+          <span className="shrink-0 rounded-full border border-[rgba(61,214,176,0.35)] bg-[rgba(61,214,176,0.16)] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-positive">
+            Live
+          </span>
+        </div>
+
+        <div className="glass sheen mb-3 rounded-[18px] p-3.5">
+          <p className="text-[24px] font-extrabold leading-none tracking-[-0.02em]">
+            SLE 6,400<span className="text-ink-2">.00</span>
+          </p>
+          <p className="mt-1.5 text-[10px] text-ink-2">raised of SLE 10,000.00 goal</p>
+          <div className="mt-2.5 h-1.5 overflow-hidden rounded-full bg-white/10">
+            <div className="h-full w-[64%] rounded-full bg-[#3DD6B0]" />
+          </div>
+          <p className="mt-2 text-[10px] text-ink-3">64% · 48 contributors</p>
+        </div>
+
+        {/* One shared code, payable by everyone. */}
+        <div className="glass glass-muted sheen mb-3 rounded-[16px] p-3 text-center">
+          <p className="text-[9px] uppercase tracking-[0.12em] text-ink-3">
+            Anyone can dial this
+          </p>
+          <p className="mt-1 font-mono text-[13px] font-bold">*715*2*44219#</p>
+        </div>
+
+        <p className="mb-2 text-[11px] font-bold">Contributors</p>
+        <div className="space-y-2">
+          {contributors.map(([name, amount, note]) => (
+            <div key={name} className="glass glass-muted sheen rounded-[14px] px-3 py-2.5">
+              <div className="flex items-center justify-between gap-2">
+                <span className="truncate text-[11px] font-bold">{name}</span>
+                <span className="shrink-0 text-[11px] font-extrabold text-positive">
+                  {amount}
+                </span>
+              </div>
+              {note ? <p className="mt-0.5 text-[9px] text-ink-3">{note}</p> : null}
             </div>
           ))}
         </div>

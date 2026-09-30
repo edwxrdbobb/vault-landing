@@ -1,4 +1,5 @@
 import { AutopaySection } from "@/components/autopay-section";
+import { CampaignsSection } from "@/components/campaigns-section";
 import { CtaBand } from "@/components/cta-band";
 import { Faq } from "@/components/faq";
 import { Features } from "@/components/features";
@@ -22,6 +23,7 @@ export default function Home() {
         <HowItWorks />
         <Features />
         <UssdSection />
+        <CampaignsSection />
         <AutopaySection />
         <SecuritySection />
         <Faq />

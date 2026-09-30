@@ -47,6 +47,12 @@ Use `.glass .sheen` together for cards, and add `.glass-muted` for compact rows.
 Don't introduce new hex values — add a token to `@theme` instead, so the site and
 the app stay in step.
 
+> **These classes live in `@layer components` — keep them there.** `.glass` sets
+> `position: relative`. Unlayered, that beats Tailwind's `absolute` utility on the
+> same element (unlayered CSS outranks layered CSS), so `class="glass absolute"`
+> silently falls back into normal flow. Inside `components`, the later
+> `utilities` layer wins and the combination behaves as written.
+
 ### Section shaders
 
 Every section sits on an animated mesh-gradient field (`SectionShader`):
@@ -63,8 +69,16 @@ the compositor; `prefers-reduced-motion` freezes them.
 ### App mockups
 
 `src/components/phone-frame.tsx` plus `phone-screens.tsx` are hand-built CSS
-replicas of the real app screens (vaults dashboard, vault detail, history). If
-those screens change materially, update them here too.
+replicas of the real app screens (vaults dashboard, vault detail, history and a
+FundMe campaign). If those screens change materially, update them here too.
+
+## Keeping copy in step with the app
+
+Section copy describes real behaviour in `../vault`, so it goes stale when the
+app changes. The FundMe section in particular mirrors `convex/campaigns.ts`:
+the single recurrent payment code, the public page at `/c/<slug>`
+(`convex/campaignPage.ts`), the date vs amount unlock rules, the contributor
+wall, and the 25/50/75/100% milestone pushes (`convex/push.ts`).
 
 ## Wiring up the early-access form
 

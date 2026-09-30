@@ -23,6 +23,14 @@ const faqs = [
     a: "The debit is reversed and the full amount goes back into the source vault. You'll see the failure on the rule and in your transaction history.",
   },
   {
+    q: "Can I raise money from other people?",
+    a: "Yes — start a FundMe campaign and it gets one recurring USSD code plus a public web page. Share either on WhatsApp and anyone can contribute by dialling, whether or not they use the app. Contributions appear on a contributor wall with a name and short message, or anonymously.",
+  },
+  {
+    q: "What if a campaign doesn't reach its goal?",
+    a: "It depends on the rule you picked when you created it. A date rule releases whatever has been raised by that moment — you keep it. An amount rule releases the funds the instant the target is reached. Contributors see which rule applies before they pay.",
+  },
+  {
     q: "When can I get it?",
     a: "The app is in active development. Join the early-access list and we'll get in touch when builds go out to testers in Sierra Leone.",
   },

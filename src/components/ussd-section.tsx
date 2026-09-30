@@ -38,7 +38,7 @@ export function UssdSection() {
         </div>
 
         <div className="relative">
-          <div className="glass glass-strong sheen rounded-[32px] p-7 sm:p-9">
+          <div className="glass glass-strong sheen rounded-[32px] p-7 pb-16 sm:p-9 sm:pb-20">
             <div className="flex items-center justify-between">
               <span className="flex items-center gap-2 text-sm font-semibold text-ink-2">
                 <KeypadIcon className="h-4 w-4" />

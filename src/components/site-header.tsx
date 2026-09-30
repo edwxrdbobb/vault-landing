@@ -4,6 +4,7 @@ import { Logo } from "./icons";
 const links = [
   { href: "#how", label: "How it works" },
   { href: "#vaults", label: "Features" },
+  { href: "#fundme", label: "FundMe" },
   { href: "#autopay", label: "Auto-pay" },
   { href: "#security", label: "Security" },
   { href: "#faq", label: "FAQ" },

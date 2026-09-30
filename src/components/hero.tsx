@@ -28,8 +28,8 @@ export function Hero() {
 
         <p className="mx-auto mt-6 max-w-xl text-[17px] leading-relaxed text-ink-2 sm:text-lg">
           A savings account with a vault door. Put money behind a date you
-          choose, top it up from any phone with a USSD code, and let your bills pay
-          themselves — straight to Orange Money, AfriMoney or the bank.
+          choose, raise it together with one shareable dial code, and let your bills
+          pay themselves — straight to Orange Money, AfriMoney or the bank.
         </p>
 
         <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">

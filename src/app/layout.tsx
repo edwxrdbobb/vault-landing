@@ -5,7 +5,7 @@ import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com";
 const description =
-  "Lock your money away until you actually need it. Time-locked savings vaults funded by USSD, automatic bill payments to Orange Money, AfriMoney and bank accounts — built for Sierra Leone.";
+  "Lock your money away until you actually need it. Time-locked savings vaults funded by USSD, group fundraising with a shareable dial code, and automatic bill payments to Orange Money, AfriMoney and bank accounts — built for Sierra Leone.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -18,6 +18,8 @@ export const metadata: Metadata = {
     "AfriMoney",
     "mobile money",
     "automatic bill payment",
+    "crowdfunding Sierra Leone",
+    "fundraising USSD",
     "SLE",
   ],
   openGraph: {
