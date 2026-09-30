@@ -18,9 +18,8 @@ export function SiteHeader() {
   return (
     <div className="sticky top-4 z-50 px-4 sm:top-5 sm:px-6">
       <header className="nav-capsule mx-auto flex h-16 max-w-5xl items-center justify-between pl-5 pr-3 sm:pl-6 sm:pr-4">
-        <Link href="/" className="flex items-center gap-2.5">
-          <Logo className="h-8 w-8" />
-          <span className="text-[17px] font-extrabold tracking-tight">Monime</span>
+        <Link href="/" aria-label="Home" className="flex items-center">
+          <Logo className="h-9 w-9" />
         </Link>
 
         <nav aria-label="Primary" className="hidden items-center gap-6 lg:flex">

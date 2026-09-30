@@ -35,7 +35,7 @@ export function AutopaySection() {
             align="left"
             eyebrow="Auto-pay"
             title="Bills that pay themselves, out of the right vault"
-            body="Point a rule at a vault, pick a destination and a rhythm. Monime checks every 15 minutes, debits the vault and disburses — and refunds the vault in full if the payout fails."
+            body="Point a rule at a vault, pick a destination and a rhythm. The scheduler checks every 15 minutes, debits the vault and disburses — and refunds the vault in full if the payout fails."
           />
         </div>
 

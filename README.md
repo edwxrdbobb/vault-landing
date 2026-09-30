@@ -1,8 +1,8 @@
-# Monime — marketing landing page
+# Marketing landing page
 
-The public landing page for **Monime**, the time-locked savings and auto-pay app
-for Sierra Leone. This is a standalone Next.js site; it lives next to the Expo
-app (`../vault`) but shares no build tooling with it, so the Metro bundler never
+The public landing page for the time-locked savings and auto-pay app for Sierra
+Leone. This is a standalone Next.js site; it lives next to the Expo app
+(`../vault`) but shares no build tooling with it, so the Metro bundler never
 sees it.
 
 ```
@@ -32,21 +32,39 @@ npm run lint
 
 The site reuses the app's **"3D glass"** system, ported from
 `../vault/constants/theme.ts`. Colours, gradients and shadows are declared once
-as Tailwind theme tokens in `src/app/globals.css`, alongside three utility
-classes that reproduce the app's signature treatments:
+as Tailwind theme tokens in `src/app/globals.css`, alongside utility classes
+that reproduce the app's signature treatments:
 
-| Class        | What it does                                                        |
-| ------------ | ------------------------------------------------------------------- |
-| `.glass`     | Frosted panel: translucent fill, hairline border, depth shadow, blur |
-| `.sheen`     | Top-light bevel — the highlight that sells the depth                 |
-| `.btn-gloss` | Glossy blue CTA: vertical gradient, inner top highlight, blue glow   |
+| Class          | What it does                                                        |
+| -------------- | ------------------------------------------------------------------- |
+| `.glass`       | Frosted panel: translucent fill, hairline border, depth shadow, blur |
+| `.sheen`       | Top-light bevel — the highlight that sells the depth                 |
+| `.btn-gloss`   | Glossy blue CTA: vertical gradient, inner top highlight, blue glow   |
+| `.card-filled` | Brand-filled accent tile, used for the bento accent and CTA band     |
+| `.nav-capsule` | The floating 3D capsule navbar: bevelled edges, lift shadow          |
 
 Use `.glass .sheen` together for cards, and add `.glass-muted` for compact rows.
 Don't introduce new hex values — add a token to `@theme` instead, so the site and
 the app stay in step.
 
-`src/components/phone-mockup.tsx` is a CSS replica of the app's Vaults
-dashboard. If the real screen changes materially, update it here too.
+### Section shaders
+
+Every section sits on an animated mesh-gradient field (`SectionShader`):
+drifting colour blobs, optionally a rotating conic sweep (`beam`) or a
+perspective grid (`grid`), with a grain layer so the gradients don't band.
+These are pure CSS and animate only on `transform`/`opacity`, so they stay on
+the compositor; `prefers-reduced-motion` freezes them.
+
+> **Note:** `<body>` deliberately has **no** `background-color`. The canvas
+> colour comes from `<html>`. A background on `<body>` paints *above*
+> negative-z-index elements in the root stacking context, which silently hides
+> every shader field and ambient glow.
+
+### App mockups
+
+`src/components/phone-frame.tsx` plus `phone-screens.tsx` are hand-built CSS
+replicas of the real app screens (vaults dashboard, vault detail, history). If
+those screens change materially, update them here too.
 
 ## Wiring up the early-access form
 
@@ -65,13 +83,21 @@ await convex.mutation(api.waitlist.join, { email });
 
 | Variable               | Purpose                                                           |
 | ---------------------- | ----------------------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL` | Canonical origin for OG tags and `metadataBase`. Defaults to `https://monime.app`. |
+| `NEXT_PUBLIC_SITE_URL` | Canonical origin for OG tags and `metadataBase`. Defaults to `https://example.com`. |
 
 ## Before launch
 
+The product name has been stripped from this site — there is currently **no
+wordmark anywhere**, only the logo glyph. Decide on a name and reinstate it in:
+`src/app/layout.tsx` (title, OG/Twitter titles, `siteName`),
+`src/components/site-header.tsx` and `src/components/site-footer.tsx` (lockups,
+copyright).
+
 - Set `NEXT_PUBLIC_SITE_URL` to the real domain.
+- Replace the placeholder `hello@example.com` contact address in the footer.
 - Add an Open Graph image (`src/app/opengraph-image.png`, 1200×630) — the
   metadata references one but no file ships yet.
-- Replace the favicon in `src/app/favicon.ico` with the Monime mark.
-- Swap the `hello@monime.app` contact address in the footer for a real inbox.
+- Replace the favicon in `src/app/favicon.ico`.
 - Point `joinWaitlist` at real storage.
+- Consider whether a payment-provider credit is required in the footer; the
+  previous one was removed.

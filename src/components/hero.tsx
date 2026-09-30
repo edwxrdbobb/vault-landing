@@ -27,7 +27,7 @@ export function Hero() {
         </h1>
 
         <p className="mx-auto mt-6 max-w-xl text-[17px] leading-relaxed text-ink-2 sm:text-lg">
-          Monime is a savings account with a vault door. Put money behind a date you
+          A savings account with a vault door. Put money behind a date you
           choose, top it up from any phone with a USSD code, and let your bills pay
           themselves — straight to Orange Money, AfriMoney or the bank.
         </p>

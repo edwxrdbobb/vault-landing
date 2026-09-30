@@ -16,7 +16,7 @@ export function CtaBand() {
               <br className="hidden sm:block" /> a locked door
             </h2>
             <p className="mt-5 max-w-lg text-[17px] leading-relaxed text-white/85">
-              Monime is rolling out to early testers in Sierra Leone. Leave your email and
+              The app is rolling out to early testers in Sierra Leone. Leave your email and
               we&apos;ll send you a build as soon as one is ready.
             </p>
 

@@ -7,7 +7,7 @@ const faqs = [
     a: "You can request an early withdrawal, but a 10% penalty comes off the amount you pull out. That friction is the point — the vault is there to make spending the hard option.",
   },
   {
-    q: "Which currency does Monime use?",
+    q: "Which currency does the app use?",
     a: "Sierra Leonean Leone (SLE) is the primary currency throughout the app, with USD available as a secondary display option.",
   },
   {
@@ -24,7 +24,7 @@ const faqs = [
   },
   {
     q: "When can I get it?",
-    a: "Monime is in active development. Join the early-access list and we'll get in touch when builds go out to testers in Sierra Leone.",
+    a: "The app is in active development. Join the early-access list and we'll get in touch when builds go out to testers in Sierra Leone.",
   },
 ];
 

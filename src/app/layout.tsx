@@ -3,16 +3,13 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://monime.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com";
 const description =
-  "Monime locks your money away until you actually need it. Time-locked savings vaults funded by USSD, automatic bill payments to Orange Money, AfriMoney and bank accounts — built for Sierra Leone.";
+  "Lock your money away until you actually need it. Time-locked savings vaults funded by USSD, automatic bill payments to Orange Money, AfriMoney and bank accounts — built for Sierra Leone.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: {
-    default: "Monime — Lock it. Grow it. Get paid out.",
-    template: "%s — Monime",
-  },
+  title: "Lock it. Grow it. Get paid out.",
   description,
   keywords: [
     "savings app Sierra Leone",
@@ -26,14 +23,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: siteUrl,
-    siteName: "Monime",
-    title: "Monime — Lock it. Grow it. Get paid out.",
+    title: "Lock it. Grow it. Get paid out.",
     description,
     locale: "en_SL",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Monime — Lock it. Grow it. Get paid out.",
+    title: "Lock it. Grow it. Get paid out.",
     description,
   },
   robots: { index: true, follow: true },
